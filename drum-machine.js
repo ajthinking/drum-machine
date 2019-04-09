@@ -10,11 +10,11 @@ var data = {
 
   // `tracks` holds the six tracks of the drum machine.  Each track
   // has a sound and sixteen steps (or beats).
-  tracks: [createTrack("gold", note(audio, 880)),
+  tracks: [createTrack("red", note(audio, 880)),
            createTrack("gold", note(audio, 659)),
-           createTrack("gold", note(audio, 587)),
-           createTrack("gold", note(audio, 523)),
-           createTrack("gold", note(audio, 440)),
+           //createTrack("gold", note(audio, 587)),
+           //createTrack("gold", note(audio, 523)),
+           //createTrack("gold", note(audio, 440)),
            createTrack("dodgerblue", kick(audio))]
 };
 
@@ -33,7 +33,7 @@ setInterval(function() {
   data.tracks
     .filter(function(track) { return track.steps[data.step]; })
     .forEach(function(track) { track.playSound(); });
-}, 100);
+}, 200);
 
 // Draw
 // ----
@@ -76,13 +76,13 @@ var screen = document.getElementById("screen").getContext("2d");
 
     // ...Go through every track...
     data.tracks.forEach(function(track, row) {
+      
 
       // ...Go through every button in this track...
       track.steps.forEach(function(on, column) {
 
         // ...If the mouse pointer was inside this button...
         if (isPointInButton(p, column, row)) {
-
           // ...Switch it off if it was on or on if it was off.
           track.steps[column] = !on;
         }
@@ -90,6 +90,39 @@ var screen = document.getElementById("screen").getContext("2d");
     });
   });
 })();
+
+function save() {
+  return data.tracks.map(track => {
+    return track.steps
+  })
+}
+
+function load(tracks) {
+  tracks.forEach(function(track, row) {
+    track.forEach(function(on, column) {
+      data.tracks[row].steps[column] = on;
+    });
+  })
+}
+
+function sparseToDense(sparseTracks) {
+  return sparseTracks.map(function(sparseTrack) {
+    return Array(16).fill(false).map(function(value, index) {
+      return sparseTrack.includes(index)
+    })
+  })
+}
+
+load(sparseToDense(
+  [
+    [12],
+    [5,11],
+    [0,1,15]
+  ]
+))
+
+console.log(save())
+
 
 // **note()** plays a note with a pitch of `frequency` for `1` second.
 function note(audio, frequency) {
