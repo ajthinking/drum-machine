@@ -2,9 +2,9 @@
 // make sound.
 var audio = new AudioContext();
 var soundFiles = {
-  "ride": new Audio('/ride.mp3'),
-  "snare": new Audio('/snare.mp3'),
-  "kick": new Audio('/kick.mp3')
+  "ride": new Audio('ride.mp3'),
+  "snare": new Audio('snare.mp3'),
+  "kick": new Audio('kick.mp3')
 };
 
 Object.keys(soundFiles).forEach(function(key) {
