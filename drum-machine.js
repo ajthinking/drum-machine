@@ -1,6 +1,11 @@
 // Create the object that contains functions that use web audio to
 // make sound.
 var audio = new AudioContext();
+var soundFiles = {
+  "ride": new Audio('/ride.mp3'),
+  "snare": new Audio('/snare.mp3'),
+  "kick": new Audio('/kick.mp3')
+};
 
 // Create the data for the drum machine.
 var data = {
@@ -10,13 +15,20 @@ var data = {
 
   // `tracks` holds the six tracks of the drum machine.  Each track
   // has a sound and sixteen steps (or beats).
-  tracks: [createTrack("red", note(audio, 880)),
-           createTrack("gold", note(audio, 659)),
-           //createTrack("gold", note(audio, 587)),
-           //createTrack("gold", note(audio, 523)),
-           //createTrack("gold", note(audio, 440)),
-           createTrack("dodgerblue", kick(audio))]
+  tracks: [
+           createTrack("black", soundFile('ride')),
+           createTrack("black", soundFile('snare')),
+           createTrack("black", soundFile('kick')),
+          ]
 };
+
+function soundFile(name) {
+  return function() {
+    soundFiles[name].currentTime = 0
+    soundFiles[name].play();
+  }
+}
+
 
 // Update
 // ------
@@ -33,7 +45,7 @@ setInterval(function() {
   data.tracks
     .filter(function(track) { return track.steps[data.step]; })
     .forEach(function(track) { track.playSound(); });
-}, 200);
+}, 160);
 
 // Draw
 // ----
@@ -115,8 +127,8 @@ function sparseToDense(sparseTracks) {
 
 load(sparseToDense(
   [
-    [12],
-    [5,11],
+    [0,2,4,6,8,10,12,14],
+    [4,12],
     [0,1,15]
   ]
 ))
