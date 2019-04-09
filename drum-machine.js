@@ -7,6 +7,10 @@ var soundFiles = {
   "kick": new Audio('/kick.mp3')
 };
 
+Object.keys(soundFiles).forEach(function(key) {
+  soundFiles[key].preload = 'auto'
+});
+
 // Create the data for the drum machine.
 var data = {
 
@@ -16,9 +20,9 @@ var data = {
   // `tracks` holds the six tracks of the drum machine.  Each track
   // has a sound and sixteen steps (or beats).
   tracks: [
-           createTrack("black", soundFile('ride')),
-           createTrack("black", soundFile('snare')),
-           createTrack("black", soundFile('kick')),
+           createTrack("#52BE80", soundFile('ride')),
+           createTrack("#FFC300", soundFile('snare')),
+           createTrack("#C70039", soundFile('kick')),
           ]
 };
 
