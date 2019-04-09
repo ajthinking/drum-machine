@@ -29,9 +29,18 @@ var data = {
 function soundFile(name) {
   return function() {
     soundFiles[name].currentTime = 0
-    try {
-      soundFiles[name].play();
-    } catch(e) {}
+
+    let promise = soundFiles[name].play();
+
+    if (promise !== undefined) {
+        promise.then(_ => {
+        // Autoplay started!
+    }).catch(error => {
+       // Autoplay was prevented.
+       // Show a "Play" button so that user can start playback.
+     });
+   }      
+
   }
 }
 
