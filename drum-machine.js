@@ -29,7 +29,9 @@ var data = {
 function soundFile(name) {
   return function() {
     soundFiles[name].currentTime = 0
-    soundFiles[name].play();
+    try {
+      soundFiles[name].play();
+    } catch(e) {}
   }
 }
 
